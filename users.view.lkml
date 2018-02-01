@@ -37,10 +37,10 @@ view: users {
     sql: ${TABLE}.created_at ;;
   }
 
-  dimension: email {
-    type: string
-    sql: ${TABLE}.email ;;
-  }
+#   dimension: email {
+#     type: string
+#     sql: ${TABLE}.email ;;
+#   }
 
   dimension: first_name {
     type: string
@@ -67,6 +67,27 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
+
+dimension: email {
+    type: string
+    sql:
+      CASE WHEN '{{ _user_attributes["city"] }}' = 'Los Angeles'
+        THEN ${TABLE}.email
+      ELSE
+        MD5(${TABLE}.email)
+      END ;;
+      }
+
+
+  dimension: nav {
+    sql: ${id};;
+    #label: " "
+    html: <nav>
+          <a href="https://localhost:9999/dashboards/3?state={{ _filters['users.state'] | url_encode }}">Map</a> |
+          <a href="https://localhost:9999/dashboards/4?state={{ _filters['users.state'] | url_encode }}">Bar Chart</a> |
+          <a href="https://localhost:9999/dashboards/5?state={{ _filters['users.state'] | url_encode }}">Pie Chart</a>
+          </nav> ;;
+    }
   measure: count {
     type: count
     drill_fields: [detail*]

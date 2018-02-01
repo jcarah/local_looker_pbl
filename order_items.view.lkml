@@ -38,6 +38,16 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  measure: link {
+    sql:count(distinct ${id}) ;;
+    html:{% if sale_price._is_selected %}
+    <a href="https://www.yahoo.com">{{rendered_value}}}}</a>
+    {% else %}
+    <a href="https://www.google.com">{{rendered_value}}</a>
+    {% endif %}
+    ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, inventory_items.id, orders.id]
