@@ -68,4 +68,8 @@ explore: user_data {
   }
 }
 
-explore: users {}
+explore: users {
+  join: user_facts {
+    sql_on: ${users.id} = ${user_facts.id} ;;
+  }
+}
