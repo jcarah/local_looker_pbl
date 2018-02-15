@@ -1,5 +1,5 @@
-- dashboard: bar_chart
-  title: Bar Chart
+- dashboard: bar_chart_2
+  title: Bar Chart 2
   layout: newspaper
   elements:
   - title: Untitled

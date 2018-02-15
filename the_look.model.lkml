@@ -71,5 +71,6 @@ explore: user_data {
 explore: users {
   join: user_facts {
     sql_on: ${users.id} = ${user_facts.id} ;;
+    relationship: one_to_one
   }
 }
