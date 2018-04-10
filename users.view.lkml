@@ -68,15 +68,21 @@ view: users {
   }
 
 
-dimension: email {
+# dimension: email {
+#     type: string
+#     sql:
+#       CASE WHEN '{{ _user_attributes["city"] }}' = 'Los Angeles'
+#         THEN ${TABLE}.email
+#       ELSE
+#         MD5(${TABLE}.email)
+#       END ;;
+#       }
+
+  dimension: email {
+    label: "{% if _explore._name == 'orders' %} Looker Registered Email Address {% else %} External Email Address {% endif %}"
     type: string
-    sql:
-      CASE WHEN '{{ _user_attributes["city"] }}' = 'Los Angeles'
-        THEN ${TABLE}.email
-      ELSE
-        MD5(${TABLE}.email)
-      END ;;
-      }
+    sql: ${TABLE}.email ;;
+  }
 
 
   dimension: nav {

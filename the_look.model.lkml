@@ -1,4 +1,5 @@
 connection: "the_look"
+# connection: "the_look_dev"
 
 # include all the views
 include: "*.view"
@@ -34,6 +35,12 @@ explore: order_items {
     sql_on: ${order_items.order_id} = ${orders.id} ;;
     relationship: many_to_one
   }
+  join: orders_2 {
+    from: orders
+    type: left_outer
+    sql_on: ${order_items.order_id} = ${orders.id} ;;
+    relationship: many_to_one
+  }
 
   join: products {
     type: left_outer
@@ -58,7 +65,18 @@ explore: orders {
 
 explore: products {}
 
+datagroup: loss_ratio_datagroup {
+  max_cache_age: "24 hours"
+}
 
+explore: loss_ratio_metrics {
+#   hidden: yes
+  from: orders
+  extends: [orders]
+  fields: [ALL_FIELDS*]
+  persist_with: loss_ratio_datagroup
+  view_name: orders
+}
 
 explore: user_data {
   join: users {
